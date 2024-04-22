@@ -1,9 +1,11 @@
+// NOTE - Remove superfluous usings
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class HeadBob : MonoBehaviour
 {
+    // NOTE - Stick to a convention, either all attributes new line or behind a field
     [SerializeField] private Transform weaponHolder;
 
     [Range(0.001f, 0.01f)]
@@ -24,6 +26,7 @@ public class HeadBob : MonoBehaviour
 
     private void Update()
     {
+        // NOTE - Wrong indentation
        CheckBobTrigger();
        StopHeadBob();
     }
@@ -45,6 +48,7 @@ public class HeadBob : MonoBehaviour
         pos.x += Mathf.Lerp(pos.x, Mathf.Cos(Time.time * frequency / 2f) * amount * 1.6f, smooth * Time.deltaTime);
         transform.localPosition += pos;
 
+        // NOTE - Remove unused code
         // weaponHolder.localPosition -= pos;
 
         return pos;
@@ -52,6 +56,7 @@ public class HeadBob : MonoBehaviour
 
     private void StopHeadBob()
     {
+        // NOTE - One line if statement should have braces
         if (transform.localPosition == startPos)
         return;
 

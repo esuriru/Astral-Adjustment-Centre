@@ -1,12 +1,17 @@
+// NOTE - Remove superfluous usings
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// NOTE - Remove the broken code comments
 public class CameraControl : MonoBehaviour
 {
+    // NOTE - Put this header above the serialize field
 	[Header("References")]
 	// [SerializeField] WallRun wallRun;
 
+    // NOTE - Move this private field down
+    // NOTE - Bad naming convention (prefer: cameraTransform)
 	private Transform cam;
 	[SerializeField] private Transform orientation;
 	//[SerializeField] GameObject playerModel;
