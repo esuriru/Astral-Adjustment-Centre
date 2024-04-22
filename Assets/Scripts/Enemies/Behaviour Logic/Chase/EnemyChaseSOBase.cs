@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // NOTE - Refer to the note in Enemy.cs: To reiterate, this should be named
-// EnemyAttackBehaviour... 
+// EnemyChaseBehaviour... 
 public class EnemyChaseSOBase : ScriptableObject
 {
     protected Enemy enemy;
