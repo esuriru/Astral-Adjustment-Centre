@@ -1,3 +1,4 @@
+// NOTE - Remove superfluous usings
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Idle-Random Wander", menuName = "Enemy Logic/Idle Logic/Random Wander")]
 public class EnemyIdleRandomWander : EnemyIdleSOBase
 {
+    // NOTE - Useless SerializeField, also, just make these private.
     [SerializeField] public float randomMovementRange = 5f;
     [SerializeField] public float randomMovementSpeed = 1f;
 
@@ -20,6 +22,7 @@ public class EnemyIdleRandomWander : EnemyIdleSOBase
         _targetPos = GetRandomPointInCircle();
     }
 
+    // NOTE - Useless override
     public override void DoExitLogic()
     {
         base.DoExitLogic();
@@ -39,21 +42,25 @@ public class EnemyIdleRandomWander : EnemyIdleSOBase
         }
     }
 
+    // NOTE - Useless override
     public override void DoPhysicsLogic()
     {
         base.DoPhysicsLogic();
     }
 
+    // NOTE - Useless override
     public override void DoAnimationTriggerEventLogic(Enemy.AnimationTriggerType triggerType)
     {
         base.DoAnimationTriggerEventLogic(triggerType);
     }
 
+    // NOTE - Useless override
     public override void Init(GameObject gameObject, Enemy enemy)
     {
         base.Init(gameObject, enemy);
     }
 
+    // NOTE - Useless override
     public override void ResetValues()
     {
         base.ResetValues();
@@ -61,7 +68,9 @@ public class EnemyIdleRandomWander : EnemyIdleSOBase
 
     private Vector3 GetRandomPointInCircle()
     {
+        // NOTE - Remove line break below
         
+        // NOTE - Remove debug log 
         Debug.Log(enemy == null);
         return enemy.transform.position + (Vector3)UnityEngine.Random.insideUnitCircle * randomMovementRange;
     }

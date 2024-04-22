@@ -1,3 +1,4 @@
+// NOTE - Remove superfluous usings
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Idle-Boss Idle", menuName = "Enemy Logic/Idle Logic/Boss Idle")]
 public class BossEnemyIdle : EnemyIdleSOBase
 {
+    // NOTE - Useless override
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
@@ -13,6 +15,7 @@ public class BossEnemyIdle : EnemyIdleSOBase
         //var component = gameObject.GetComponent<something>();
     }
 
+    // NOTE - Useless override
     public override void DoExitLogic()
     {
         base.DoExitLogic();
@@ -21,6 +24,7 @@ public class BossEnemyIdle : EnemyIdleSOBase
         //if you need to reset any values, return anything to pool at end of state
     }
 
+    // NOTE - Useless override
     public override void DoFrameUpdateLogic()
     {
         base.DoFrameUpdateLogic();
@@ -57,21 +61,25 @@ public class BossEnemyIdle : EnemyIdleSOBase
 
     }
 
+    // NOTE - Useless override
     public override void DoPhysicsLogic()
     {
         base.DoPhysicsLogic();
     }
 
+    // NOTE - Useless override
     public override void DoAnimationTriggerEventLogic(Enemy.AnimationTriggerType triggerType)
     {
         base.DoAnimationTriggerEventLogic(triggerType);
     }
 
+    // NOTE - Useless override
     public override void Init(GameObject gameObject, Enemy enemy)
     {
         base.Init(gameObject, enemy);
     }
 
+    // NOTE - Useless override
     public override void ResetValues()
     {
         base.ResetValues();
