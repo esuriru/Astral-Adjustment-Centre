@@ -1,3 +1,4 @@
+// NOTE - Remove superfluous usings
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,7 @@ public class EnemyAttackIndicator : MonoBehaviour
     private float charge;
     private AttackType type;
 
+    // NOTE - Missing access specifier
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCombat>();
@@ -38,6 +40,9 @@ public class EnemyAttackIndicator : MonoBehaviour
     {
         switch (type)
         {
+            // NOTE - This can just be achieved using a dictionary for the
+            // vectors, and using maxDistanceQ.SetActive(type ==
+            // AttackType.QUAD), etc..
             case AttackType.QUAD:
                 maxDistanceQ.SetActive(true);
                 chargeDistanceQ.SetActive(true);
@@ -96,13 +101,17 @@ public class EnemyAttackIndicator : MonoBehaviour
         switch (type)
         {
             case AttackType.QUAD:
+                // NOTE - You already set an array of colliders, just use
+                // OverlapBoxNonAlloc
                 colliders = Physics.OverlapBox(transform.position, (maxDistanceQ.transform.localScale / 2) + new Vector3(0, maxDistanceQ.transform.localScale.y, 0));
                 foreach (Collider collider in colliders)
                 {
                     if (collider.CompareTag("PlayerCollider"))
                     {
                         player.Damage(dmg);
+                        // NOTE - Remove debug log
                         Debug.Log("Player Hit");
+                        // NOTE - Break here
                     }
                 }
 
@@ -115,7 +124,9 @@ public class EnemyAttackIndicator : MonoBehaviour
                     if (collider.CompareTag("PlayerCollider"))
                     {
                         player.Damage(dmg);
+                        // NOTE - Remove debug log
                         Debug.Log("Player Hit");
+                        // NOTE - Break here
                     }
                 }
 

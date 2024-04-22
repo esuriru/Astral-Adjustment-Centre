@@ -1,9 +1,11 @@
+// NOTE - Remove superfluous usings
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyStrikingDistanceCheck : MonoBehaviour
 {
+    // NOTE - Wrong indentation
       private GameObject PlayerTarget { get; set; }
     private Enemy _enemy;
 
@@ -22,6 +24,7 @@ public class EnemyStrikingDistanceCheck : MonoBehaviour
 
     private void OnTriggerExit(Collider collision)
     {
+        // NOTE - Wrong indentation
          if (collision.CompareTag("PlayerCollider"))
         {
             _enemy.SetStrikingDistanceBool(false);
