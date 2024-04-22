@@ -1,9 +1,11 @@
+// NOTE - Remove superfluous usings
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyStateMachine 
 {
+    // NOTE - In my opinion, don't shorten current
     public EnemyState currEnemyState { get; set; }
 
     public void Init(EnemyState startingState)
@@ -18,6 +20,7 @@ public class EnemyStateMachine
         currEnemyState = nextState;
         currEnemyState.EnterState();
 
+        // NOTE - Remove unused code 
         //Debug.Log(currEnemyState);
     }
 }
