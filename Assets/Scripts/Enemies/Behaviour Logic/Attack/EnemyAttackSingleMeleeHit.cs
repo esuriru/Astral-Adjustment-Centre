@@ -1,9 +1,10 @@
+// NOTE - Remove superfluous usings
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Attack- Single Melee Hit", menuName = "Enemy Logic/Attack State/Single Melee Hit")]
-
+// NOTE - Remove this line break
 public class EnemyAttackSingleMeleeHit : EnemyAttackSOBase
 {
     [SerializeField] private float _hitCooldown = 2f;
@@ -11,6 +12,7 @@ public class EnemyAttackSingleMeleeHit : EnemyAttackSOBase
     [SerializeField] private float _timeTillExit = 2f;
     [SerializeField] private float _distanceToCountExit = 4.5f;
 
+    // NOTE - Inconsistent naming convention
     private Animator animator;
 
 
@@ -20,9 +22,12 @@ public class EnemyAttackSingleMeleeHit : EnemyAttackSOBase
     public override void DoEnterLogic()
     {
         base.DoEnterLogic();
+
+        // NOTE - Remove .gameObject, also why GetComponent again?
         animator = enemy.gameObject.GetComponent<Animator>();
     }
 
+    // NOTE - Useless override
     public override void DoExitLogic()
     {
         base.DoExitLogic();
@@ -38,6 +43,7 @@ public class EnemyAttackSingleMeleeHit : EnemyAttackSOBase
         lookPos.y = 0;
 
         Quaternion lookRotation = Quaternion.LookRotation(lookPos);
+        // NOTE - Hardcoded speed
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 3);
 
         _timer += Time.deltaTime;
@@ -57,22 +63,27 @@ public class EnemyAttackSingleMeleeHit : EnemyAttackSOBase
 
             if (_exitTimer >= _timeTillExit)
             {
+                // NOTE - Check note in Enemy.cs
                 enemy.stateMachine.ChangeState(enemy.chaseState);
             }
         }
+        // NOTE - Remove this line break below
 
         else
         {
             _exitTimer = 0;
         }
+        // NOTE - Remove this line break below
 
     }
 
+    // NOTE - Useless override
     public override void DoPhysicsLogic()
     {
         base.DoPhysicsLogic();
     }
 
+    // NOTE - Useless override
     public override void DoAnimationTriggerEventLogic(Enemy.AnimationTriggerType triggerType)
     {
         base.DoAnimationTriggerEventLogic(triggerType);
@@ -85,6 +96,7 @@ public class EnemyAttackSingleMeleeHit : EnemyAttackSOBase
         animator = enemy.gameObject.GetComponent<Animator>();
     }
 
+    // NOTE - Useless override
     public override void ResetValues()
     {
         base.ResetValues();

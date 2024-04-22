@@ -1,10 +1,11 @@
+// NOTE - Remove superfluous usings
 using PlayFab.MultiplayerModels;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Attack- Boss Attack", menuName = "Enemy Logic/Attack State/Boss Attack")]
-
+// NOTE - Remove this line break
 public class BossEnemyAttack : EnemyAttackSOBase
 {
     private enum AttackType
@@ -21,6 +22,8 @@ public class BossEnemyAttack : EnemyAttackSOBase
     private Animator animator;
     private BossEnemy self;
 
+    // NOTE - In my opinion, public should be above private, and underscore on
+    // private fields instead of public
     public Vector3 _attackRange;
     public float _posOffset;
     public float _damage;
@@ -61,6 +64,7 @@ public class BossEnemyAttack : EnemyAttackSOBase
         }
     }
 
+    // NOTE - Useless override
     public override void DoExitLogic()
     {
         base.DoExitLogic();
@@ -80,8 +84,11 @@ public class BossEnemyAttack : EnemyAttackSOBase
         {
             _timer -= Time.deltaTime;
         }
+        // NOTE - Not needed else if check
         else if (_timer <= 0)
         {
+            // NOTE - var animatorStateInfo =
+            // animator.GetCurrentAnimatorStateInfo(0);
             if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
             {
                 // play follow through anim
@@ -105,21 +112,25 @@ public class BossEnemyAttack : EnemyAttackSOBase
         self.indicator.DoCharge(_chargeUpTimer, _timer);
     }
 
+    // NOTE - Useless override
     public override void DoPhysicsLogic()
     {
         base.DoPhysicsLogic();
     }
 
+    // NOTE - Useless override
     public override void DoAnimationTriggerEventLogic(Enemy.AnimationTriggerType triggerType)
     {
         base.DoAnimationTriggerEventLogic(triggerType);
     }
 
+    // NOTE - Useless override
     public override void Init(GameObject gameObject, Enemy enemy)
     {
         base.Init(gameObject, enemy);
     }
 
+    // NOTE - Useless override
     public override void ResetValues()
     {
         base.ResetValues();

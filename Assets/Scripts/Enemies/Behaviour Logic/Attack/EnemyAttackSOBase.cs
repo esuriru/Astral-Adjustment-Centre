@@ -1,7 +1,10 @@
+// NOTE - Remove superfluous usings
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// NOTE - Refer to the note in Enemy.cs: To reiterate, this should be named
+// EnemyAttackBehaviour... 
 public class EnemyAttackSOBase : ScriptableObject
 {
     protected Enemy enemy;

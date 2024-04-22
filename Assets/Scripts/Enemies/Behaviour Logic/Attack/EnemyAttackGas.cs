@@ -1,15 +1,18 @@
+// NOTE - Remove superfluous usings
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Attack- Gas", menuName = "Enemy Logic/Attack State/Gas Attack")]
-
+// NOTE - Remove this line break
 public class EnemyAttackGas : EnemyAttackSOBase
 {
     [SerializeField] private float _gasCooldown = 3f;
 
     [SerializeField] private float _timeTillExit = 2f;
     [SerializeField] private float _distanceToCountExit = 3f;
+
+    // NOTE - Inconsistent naming convention
     private Animator gasAnimator;
 
     private Animator animator;
@@ -47,6 +50,7 @@ public class EnemyAttackGas : EnemyAttackSOBase
         lookPos.y = 0;
 
         Quaternion lookRotation = Quaternion.LookRotation(lookPos);
+        // NOTE - Hardcoded speed (* 3)
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 3);
 
         if (Vector3.Distance(playerTransform.position, enemy.transform.position) > (_distanceToCountExit * playerTransform.localScale.x))
@@ -55,22 +59,27 @@ public class EnemyAttackGas : EnemyAttackSOBase
 
             if (_exitTimer >= _timeTillExit)
             {
+                // NOTE - Check note in Enemy.cs
                 enemy.stateMachine.ChangeState(enemy.chaseState);
             }
         }
+        // NOTE - Remove this line break below
 
         else
         {
             _exitTimer = 0;
         }
+        // NOTE - Remove this line break below
 
     }
 
+    // NOTE - Useless override
     public override void DoPhysicsLogic()
     {
         base.DoPhysicsLogic();
     }
 
+    // NOTE - Useless override
     public override void DoAnimationTriggerEventLogic(Enemy.AnimationTriggerType triggerType)
     {
         base.DoAnimationTriggerEventLogic(triggerType);
@@ -83,9 +92,11 @@ public class EnemyAttackGas : EnemyAttackSOBase
         animator = enemy.gameObject.GetComponent<Animator>();
         gasAnimator = enemy.gameObject.GetComponent<GasEnemy>().gasAnimator;
         gasObject = enemy.gameObject.GetComponent<GasEnemy>().gasObject;
+        // NOTE - Remove line break below
 
     }
 
+    // NOTE - Useless override
     public override void ResetValues()
     {
         base.ResetValues();
