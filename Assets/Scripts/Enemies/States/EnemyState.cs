@@ -1,3 +1,4 @@
+// NOTE - Remove superfluous usings
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class EnemyState
     protected Enemy enemy;
     protected EnemyStateMachine enemyStateMachine;
 
+    // NOTE - Remove space
     public  EnemyState(Enemy enemy, EnemyStateMachine enemyStateMachine)
     {
         this.enemy = enemy;

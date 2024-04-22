@@ -1,12 +1,15 @@
+// NOTE - Remove superfluous usings
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAttackState : EnemyState
 {
+    // NOTE - Remove this line break below
    
     public EnemyAttackState(Enemy enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
     {
+        // NOTE - Remove unused code
          //_playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
