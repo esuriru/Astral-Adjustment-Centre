@@ -1,3 +1,4 @@
+// NOTE - Remove superfluous usings
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,11 +10,14 @@ public class EnemyChaseDirectToPlayer : EnemyChaseSOBase
 
     private Animator animator;
    
+    // NOTE - Useless override
+    // NOTE - Wrong indentation 
    public override void DoEnterLogic()
     {
         base.DoEnterLogic();
     }
 
+    // NOTE - Useless override
     public override void DoExitLogic()
     {
         base.DoExitLogic();
@@ -26,6 +30,7 @@ public class EnemyChaseDirectToPlayer : EnemyChaseSOBase
         Vector3 moveDirection = (playerTransform.position - enemy.transform.position).normalized;
         moveDirection.y = 0;
 
+        // NOTE - Use ternary operator
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("YBotPunch"))
         {
             enemy.MoveEnemy(Vector3.zero);
@@ -44,11 +49,13 @@ public class EnemyChaseDirectToPlayer : EnemyChaseSOBase
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 3);
     }
 
+    // NOTE - Useless override
     public override void DoPhysicsLogic()
     {
         base.DoPhysicsLogic();
     }
 
+    // NOTE - Useless override
     public override void DoAnimationTriggerEventLogic(Enemy.AnimationTriggerType triggerType)
     {
         base.DoAnimationTriggerEventLogic(triggerType);
@@ -61,6 +68,7 @@ public class EnemyChaseDirectToPlayer : EnemyChaseSOBase
         animator = gameObject.GetComponent<Animator>();
     }
 
+    // NOTE - Useless override
     public override void ResetValues()
     {
         base.ResetValues();

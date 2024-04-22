@@ -1,3 +1,4 @@
+// NOTE - Remove superfluous usings
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -17,6 +18,7 @@ public class BossEnemyChase : EnemyChaseSOBase
         _timer = _attackCooldown;
     }
 
+    // NOTE - Useless override
     public override void DoExitLogic()
     {
         base.DoExitLogic();
@@ -24,9 +26,14 @@ public class BossEnemyChase : EnemyChaseSOBase
 
     public override void DoFrameUpdateLogic()
     {
+        // NOTE - Might be better to separate the logic of the attack, from this
+        // function, since you are also running the timer which makes it hard to
+        // see things in the bigger picture
+        // NOTE - You can cache this, you are running GetComponent every frame
         BossEnemy self = transform.GetComponent<BossEnemy>();
         if (enemy.isInStrikingDistance && _timer <= 0)
         {
+            // NOTE - This seems very suspicious. Why are you making a new EnemyAttackState?
             self.attackState = new EnemyAttackState(self, self.stateMachine);
             if (self.CurrentHealth <= self.MaxHealth / 2)
             {
@@ -48,6 +55,7 @@ public class BossEnemyChase : EnemyChaseSOBase
                 self.enemyAttackBaseInstance = Instantiate(self.enemyAttackOverrideBase[check]);
                 self.enemyAttackBaseInstance.Init(gameObject, self);
             }
+            // NOTE - Check the notes in Enemy.cs
             enemy.stateMachine.ChangeState(enemy.attackState);
         }
         if (!enemy.isAggroed)
@@ -58,6 +66,7 @@ public class BossEnemyChase : EnemyChaseSOBase
         Vector3 moveDirection = (playerTransform.position - enemy.transform.position).normalized;
         moveDirection.y = 0;
 
+        // NOTE - Check the notes in Enemy.cs
         enemy.MoveEnemy(moveDirection * _movementSpeed);
 
         Vector3 lookPos = (playerTransform.transform.position - transform.position).normalized;
@@ -72,21 +81,25 @@ public class BossEnemyChase : EnemyChaseSOBase
         }
     }
 
+    // NOTE - Useless override
     public override void DoPhysicsLogic()
     {
         base.DoPhysicsLogic();
     }
 
+    // NOTE - Useless override
     public override void DoAnimationTriggerEventLogic(Enemy.AnimationTriggerType triggerType)
     {
         base.DoAnimationTriggerEventLogic(triggerType);
     }
 
+    // NOTE - Useless override
     public override void Init(GameObject gameObject, Enemy enemy)
     {
         base.Init(gameObject, enemy);
     }
 
+    // NOTE - Useless override
     public override void ResetValues()
     {
         base.ResetValues();
