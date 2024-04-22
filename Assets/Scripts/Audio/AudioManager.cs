@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class AudioManager : Singleton<AudioManager>
 {
+    // NOTE - Redundant initialize
     [SerializeField] private List<AudioSource> bgmSources = new List<AudioSource>();
     [SerializeField] private List<AudioSource> sfxSources = new List<AudioSource>();
     [SerializeField] private List<AudioSource> vlSources = new List<AudioSource>();
@@ -13,6 +14,7 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] private List<AudioClip> sfxClips = new List<AudioClip>();
     [SerializeField] private List<AudioClip> vlClips = new List<AudioClip>();
 
+    // NOTE - Missing access specifier
     void Awake()
     {
         bgmSources = GameManager.Instance.FindChildWithTag(gameObject, "BGM").GetComponents<AudioSource>().ToList();
@@ -22,6 +24,8 @@ public class AudioManager : Singleton<AudioManager>
 
     public IEnumerator PlayBGM(string name)
     {
+        // NOTE - Erroneous code, 
+        // should not generate these components at runtime
         AudioSource currSource = new AudioSource();
         AudioSource newSource = new AudioSource();
         AudioClip bgmToPlay = null;
@@ -81,8 +85,11 @@ public class AudioManager : Singleton<AudioManager>
         }
     }
 
+    // NOTE - Maybe use LINQ for readability for these play functions
+
     public void PlaySFX(string name)
     {
+
         AudioClip clipToPlay = null;
 
         for (int i = 0; i < sfxClips.Count; i++)
@@ -90,6 +97,7 @@ public class AudioManager : Singleton<AudioManager>
             if (sfxClips[i].name == name)
             {
                 clipToPlay = sfxClips[i];
+                // NOTE - Should break here
             }
         }
 
@@ -113,11 +121,13 @@ public class AudioManager : Singleton<AudioManager>
             if (sfxClips[i].name == name)
             {
                 clipToPlay = sfxClips[i];
+                // NOTE - Should break here
             }
         }
 
         for (int i = 0; i < sfxSources.Count; i++)
         {
+            // NOTE - Combine into one if else
             if (sfxSources[i].isPlaying && sfxSources[i].clip == clipToPlay)
             {
                 return;
@@ -142,6 +152,7 @@ public class AudioManager : Singleton<AudioManager>
             if (sfxClips[i].name == name)
             {
                 clipToPlay = sfxClips[i];
+                // NOTE - Should break here
             }
         }
 
@@ -165,6 +176,7 @@ public class AudioManager : Singleton<AudioManager>
             if (vlClips[i].name == name)
             {
                 clipToPlay = vlClips[i];
+                // NOTE - Should break here
             }
         }
 
@@ -182,6 +194,27 @@ public class AudioManager : Singleton<AudioManager>
     public IEnumerator SetBGMSourcesVol(float vol)
     {
         bool fadeIn = vol > bgmSources[0].volume;
+
+        // NOTE - While condition can be based off of the fadeIn boolean, and
+        // can use a ternary operator to change positive/negative change
+        // Possible solution below:
+
+        // bool ConditionMet()
+        // {
+        //     return fadeIn ? bgmSources[0].volume < vol : 
+        //         bgmSources[0].volume > vol;
+        // }
+
+        // while (ConditionMet())
+        // {
+        //     foreach (AudioSource source in bgmSources)
+        //     {
+        //         source.volume += 
+        //             (fadeIn ? Time.deltaTime : -Time.deltaTime) / 2;
+        //     }
+
+        //     yield return null;
+        // }
 
         if (fadeIn)
         {
@@ -209,6 +242,7 @@ public class AudioManager : Singleton<AudioManager>
         }
     }
 
+    // NOTE - Missing access specifier
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.M))
@@ -217,6 +251,7 @@ public class AudioManager : Singleton<AudioManager>
         }
         else if (Input.GetKeyUp(KeyCode.M))
         {
+            // NOTE - Should indent here
            StopSFXLoop("SFXHit");
         }
     }
