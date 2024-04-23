@@ -1,3 +1,4 @@
+// NOTE - Remove superfluous usings
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -5,9 +6,11 @@ using UnityEngine;
 
 public class WallRun : MonoBehaviour
 {
+    // NOTE - Missing access specifier
     [SerializeField] Transform orientation;
 
     [Header("Detection")]
+    // NOTE - Missing access specifiers
     [SerializeField] float wallDistance = 0.5f;
     [SerializeField] float minimumJumpHeight = 1.5f;
 
@@ -16,6 +19,7 @@ public class WallRun : MonoBehaviour
     [SerializeField] private float wallRunJumpForce;
 
     [Header("Camera")]
+    // NOTE - Prefer not to shorten camera to cam
     [SerializeField] private Camera cam;
     [SerializeField] private float fov;
     [SerializeField] private float wallRunFov;
@@ -23,21 +27,26 @@ public class WallRun : MonoBehaviour
     [SerializeField] private float camTilt;
     [SerializeField] private float camTiltTime;
 
+    // NOTE - Rename to `Tilt`, follow naming convention 
     public float tilt { get; private set; }
 
+    // NOTE - Missing access specifiers
     bool wallLeft = false;
     bool wallRight = false;
     
     RaycastHit leftWallHit;
     RaycastHit rightWallHit;
 
+    // NOTE - Put this serialized field above, and use `rigidbody`
     [SerializeField] private Rigidbody rb;
 
+    // NOTE - Empty function, missing access specifier
     void Start()
     {
 
     }
 
+    // NOTE - Missing access specifier
     void Update()
     {
         WallCheck();
@@ -63,6 +72,7 @@ public class WallRun : MonoBehaviour
         }
     }
 
+    // NOTE - Missing access specifier
     void WallCheck()
     {
         wallLeft = Physics.Raycast(transform.position, -orientation.right, out leftWallHit, wallDistance);
@@ -70,11 +80,13 @@ public class WallRun : MonoBehaviour
     }
 
     // If not hitting anything, can wall run
+    // NOTE - Missing access specifier
     bool CanWallRun()
     {
         return !Physics.Raycast(transform.position, Vector3.down, minimumJumpHeight);
     }
 
+    // NOTE - Missing access specifier
     void StartWallRun()
     {
         rb.useGravity = false;
@@ -83,6 +95,8 @@ public class WallRun : MonoBehaviour
 
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, wallRunFov, wallRunFovTime * Time.deltaTime);
 
+        // NOTE - If it's not wallLeft, it will alway be wallRight, yes? Since
+        // you are already wall running, also, just use a ternary operator
         if (wallLeft)
             tilt = Mathf.Lerp(tilt, -camTilt, camTiltTime * Time.deltaTime);
         else if (wallRight)
@@ -90,6 +104,7 @@ public class WallRun : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            // NOTE - Use a Ternary operator
             if (wallLeft)
             {
                 Vector3 wallRunJumpDirection = transform.up + leftWallHit.normal;
@@ -105,6 +120,7 @@ public class WallRun : MonoBehaviour
         }
     }
 
+    // NOTE - Missing access specifier
     void StopWallRun()
     {
         rb.useGravity = true;

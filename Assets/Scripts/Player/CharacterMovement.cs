@@ -1,3 +1,4 @@
+// NOTE - Remove superfluous usings
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -5,29 +6,44 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
+    // NOTE - Missing access specifiers, prefer: private
 	[SerializeField] PlayerData playerData;
 	[SerializeField] Transform orientation;
 		
+    // NOTE - In my opinion, I wouldn't shorten cam
 	[Header("Crouch and Prone")]
+
+    // NOTE - Put this below. It is not serialized
 	private Camera cam;
+
+    // NOTE - Missing access specifiers, prefer: private
 	[SerializeField] GameObject capsule;
 	[SerializeField] CapsuleCollider capsuleCollider;
+
+    // NOTE - Put this below. It is not serialized
 	private float playerHeight;
 
 	[Header("Stair movement")]
+    // NOTE - Missing access specifiers, prefer: private
 	[SerializeField] GameObject stepRayUpper;
     [SerializeField] GameObject stepRayLower;
     [SerializeField] float stepSmooth = 3;
 
+    // NOTE - Use a FSM
 	private bool isCrouching;
 	private bool isProning;
 	private bool isGrounded;
+
+    // NOTE - Unused isMoving bool
 	private bool isMoving;
 	private	Vector3 moveDirection;
 
+    // NOTE - Put this above
 	[SerializeField] private Transform groundCheck;
 	private Vector3 slopeMoveDirection;
 
+    // NOTE - Missing access specifiers, prefer: private
+    // NOTE - Also, rather not shorten rigidbody to rb
 	Rigidbody rb;
 
 	RaycastHit slopeHit;
@@ -35,6 +51,8 @@ public class CharacterMovement : MonoBehaviour
 	private void Start()
 	{
 		rb = GetComponent<Rigidbody>();
+
+        // NOTE - Just set this in the editor
 		rb.freezeRotation = true;
 
 		playerHeight = transform.localScale.y;
@@ -88,6 +106,7 @@ public class CharacterMovement : MonoBehaviour
 		moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
 		isMoving = (horizontalInput != 0 || verticalInput != 0) && isGrounded;
+        // NOTE - Remove this line break below
 		
 	}
 
@@ -97,6 +116,9 @@ public class CharacterMovement : MonoBehaviour
 		rb.AddForce(transform.up * playerData.jumpForce, ForceMode.Impulse);
 	}
 
+    // NOTE - Maybe make a FSM where then, the scale could be controlled by the
+    // state instead of setting it in each function, and of course, not having
+    // to use functions in the first place
 	private void Crouch()
 	{
 		capsule.transform.localScale = new Vector3(capsule.transform.localScale.x, playerData.crouchScale, capsule.transform.localScale.z);
@@ -104,6 +126,7 @@ public class CharacterMovement : MonoBehaviour
 		
 		isCrouching = true;
 
+        // NOTE - One line if missing braces 
 		if (isProning)
 		isProning = false;
 	}
@@ -115,6 +138,7 @@ public class CharacterMovement : MonoBehaviour
 
 		isProning = true;
 
+        // NOTE - One line if missing braces 
 		if (isCrouching)
 		isCrouching = false;
 	}
@@ -123,17 +147,22 @@ public class CharacterMovement : MonoBehaviour
 	{
 		capsule.transform.localScale = new Vector3(capsule.transform.localScale.x, playerData.standScale, capsule.transform.localScale.z);
 
+        // NOTE - One line if missing braces 
 		if (isCrouching)
 		isCrouching = false;
 
+        // NOTE - One line if missing braces 
 		if (isProning)
 		isProning = false;
 	}
 
+    // NOTE - Missing access specifier
 	void ControlSpeed()
 	{
 		ScriptableBuff spdBuff = BuffManager.Instance.buffs[4];
         float spdBuffMultiplier;
+
+        // NOTE - Use a ternary operator
         if (spdBuff.currBuffTier > 0)
         {
             spdBuffMultiplier = spdBuff.buffBonus[spdBuff.currBuffTier - 1];
@@ -161,8 +190,10 @@ public class CharacterMovement : MonoBehaviour
 		}
 	}
 
+    // NOTE - Missing access specifier
 	void ControlDrag()
 	{
+        // NOTE - Use a ternary operator
 		if (isGrounded)
 		{
 			rb.drag = playerData.groundDrag;
@@ -173,6 +204,7 @@ public class CharacterMovement : MonoBehaviour
 		}
 	}
 
+    // NOTE - Missing access specifier
 	void MovePlayer()
 	{
 		if (isGrounded && !OnSlope())
@@ -182,20 +214,27 @@ public class CharacterMovement : MonoBehaviour
 		else if (isGrounded && OnSlope())
 		{
 			rb.AddForce(slopeMoveDirection.normalized * playerData.moveSpeed, ForceMode.Acceleration);
+            // NOTE - Remove debug code 
 			// Debug.Log(slopeMoveDirection);
 		}
 		else if (!isGrounded)
 		{
+            // NOTE - Reorder operands 
 			rb.AddForce(moveDirection.normalized * playerData.moveSpeed * playerData.airMultiplier, ForceMode.Acceleration);
 		}
 	}
 
 	private bool OnSlope()
 	{
+        // NOTE - This entire function can be one line. It's not like you are
+        // going to read it again
+
 		// If there is something under the player
+        // NOTE - Hardcoded height/leeway, not sure (0.6f)
 		if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + 0.6f))
 		{
 			// If it is a slope
+            // NOTE - Just return this condition
 			if (slopeHit.normal != Vector3.up)
 			{
 				return true;
@@ -210,7 +249,10 @@ public class CharacterMovement : MonoBehaviour
 
 	private void ClimbStep()
     {
+        // NOTE - Inline the declaration
 		RaycastHit hitLower;
+        // NOTE - Combine these if statements into one. Also, discard the
+        // raycast hits.
         if (Physics.Raycast(stepRayLower.transform.position, orientation.transform.forward, out hitLower, 0.1f))
         {
             RaycastHit hitUpper;
@@ -220,6 +262,7 @@ public class CharacterMovement : MonoBehaviour
             }
         }
 
+        // NOTE - Same as above, also what does the 45 mean?
 		RaycastHit hitLower45;
 		if (Physics.Raycast(stepRayLower.transform.position, orientation.transform.forward + orientation.transform.right, out hitLower45, 0.1f))
         {
@@ -230,6 +273,7 @@ public class CharacterMovement : MonoBehaviour
             }
         }
 
+        // NOTE - Same as above, also what does the 45 mean?
         RaycastHit hitLowerMinus45;
         if (Physics.Raycast(stepRayLower.transform.position, orientation.transform.forward - orientation.transform.right, out hitLowerMinus45, 0.1f))
         {
