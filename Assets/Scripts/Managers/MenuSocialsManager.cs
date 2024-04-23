@@ -1,3 +1,4 @@
+// NOTE - Remove superfluous usings
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
@@ -7,10 +8,13 @@ using UnityEngine;
 public class MenuSocialsManager : MonoBehaviour
 {
     [SerializeField] private CinemachineBrain mainCamBrain;
+
+    // NOTE - Consider not shortening current 
     [SerializeField] private CinemachineVirtualCamera currCamera;
     [SerializeField] private CinemachineVirtualCamera creditsCamera, secondFloorEntranceCamera, secondFloorExitCamera;
     [SerializeField ] private CinemachineVirtualCamera menuCamera, socialsCamera;
 
+    // NOTE - Maybe use a dictionary? Easier to iterate over.
     [SerializeField] private MenuButtonClick friendsButton, leaderboardButton, guildsButton;
     [SerializeField] private GameObject menuTarget, friendsTarget, leaderboardTarget, guildsTarget, myGuildTarget, nextTarget;
     [SerializeField] private GameObject menuPanel, friendsPanel, leaderboardPanel, guildsPanel, myGuildPanel, nextPanel;
@@ -18,6 +22,7 @@ public class MenuSocialsManager : MonoBehaviour
 
     [SerializeField] private float defaultDelay = 0.25f;
 
+    // NOTE - Missing access specifier
     void Awake()
     {
         SetAllButtonClick(true);
@@ -36,6 +41,7 @@ public class MenuSocialsManager : MonoBehaviour
         leaderboardButton.enabled = active;
         guildsButton.enabled = active;
 
+        // NOTE - Cache collider in the button script 
         friendsButton.GetComponent<Collider>().enabled = active;
         leaderboardButton.GetComponent<Collider>().enabled = active;
         guildsButton.GetComponent<Collider>().enabled = active;
@@ -43,6 +49,7 @@ public class MenuSocialsManager : MonoBehaviour
 
     private void SetAllPanels(bool active)
     {
+        // NOTE - Check note above. Maybe consider a dictionary 
         friendsPanel.SetActive(active);
         leaderboardPanel.SetActive(active);
         guildsPanel.SetActive(active);
@@ -176,6 +183,9 @@ public class MenuSocialsManager : MonoBehaviour
     {
         float dissolveValue = mat.GetFloat("_DissolveValue");
 
+        // NOTE - Look in AudioManager, consider having a bool function instead
+        // of making two while loops to make it only one, and use a ternary 
+        // operator instead for the Time.deltaTime :)
         if (show)
         {
             AudioManager.Instance.PlaySFX("SFXHologramOpen");
@@ -239,6 +249,7 @@ public class MenuSocialsManager : MonoBehaviour
             StartCoroutine(DelayedShowPanel(nextPanel, mat, true, defaultDelay));
         }
 
+        // NOTE - Consider using yield break;
         yield return null;
     }
 }

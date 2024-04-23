@@ -7,6 +7,7 @@ public class ApplicationManager : MonoBehaviour
         Quit();
     }
 
+    // NOTE - Just put this function into QuitApplication
     private void Quit()
     {
         Application.Quit();

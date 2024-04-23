@@ -1,3 +1,4 @@
+// NOTE - Remove superfluous usings
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,12 +8,15 @@ public class TooltipManager : MonoBehaviour
 {
     public static TooltipManager instance;
 
+    // NOTE - Missing access specifier, prefer: private
     [SerializeField] TMP_Text tooltipText;
 
+    // NOTE - Missing access specifier, prefer: private
     void Awake()
     {
         if (instance != null && instance != this)
         {
+            // NOTE - Remove `this`
             Destroy(this.gameObject);
         }
         else
@@ -21,11 +25,13 @@ public class TooltipManager : MonoBehaviour
         }
     }
 
+    // NOTE - Missing access specifier, prefer: private
     void Start()
     {
         gameObject.SetActive(false);
     }
 
+    // NOTE - Missing access specifier, prefer: private
     void Update()
     {
         transform.position = Input.mousePosition;

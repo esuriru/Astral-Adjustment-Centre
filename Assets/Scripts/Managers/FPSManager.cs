@@ -1,3 +1,4 @@
+// NOTE - Remove superfluous usings
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,10 +7,12 @@ using UnityEngine;
 public class FPSManager : MonoBehaviour
 {
     // FPS Variables
+    // NOTE - Make this Serialized private
     public TMP_Text fpsText;
     private int frameIndex;
     private float[] frameDeltaTimeArray;
 
+    // NOTE - Missing access specifier
     void Awake()
     {
         frameDeltaTimeArray = new float[50];

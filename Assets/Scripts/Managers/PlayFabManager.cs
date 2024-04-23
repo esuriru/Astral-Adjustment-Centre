@@ -1,3 +1,4 @@
+// NOTE - Remove superfluous usings
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,9 +8,16 @@ using EntityKey = PlayFab.GroupsModels.EntityKey;
 using UnityEngine;
 using PlayFab.GroupsModels;
 
+// NOTE - This class does nothing but hold values, maybe call it
+// PlayFabGlobalData instead?
 public class PlayFabManager : MonoBehaviour
 {
+    // NOTE - Make this private
     public static PlayFabManager instance = null;
+
+    // NOTE - What's the point of having an instance, if everything is static
+    // anyway?
+
     public static string currPlayFabID;
     public static string currTitleID;
     public static string currPlayFabDN;

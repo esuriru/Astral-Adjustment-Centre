@@ -8,16 +8,22 @@ using UnityEngine.UI;
 
 public class TimelineManager : Singleton<TimelineManager>
 {
+    // NOTE - Make this serialized private. Not used anywhere
     public Button skipButton;
     [SerializeField] private GameObject subtitlePanel;
     [SerializeField] private GameObject topPanel, btmPanel;
     [SerializeField] private GameObject centerText;
     [SerializeField] private PlayableDirector director;
     [SerializeField] private List<TimelineAsset> timelines = new List<TimelineAsset>();
+
+    // NOTE - Make this serialized private. Not used anywhere
     public string currCutsceneName;
+
+    // NOTE - Make this serialized private. Not used anywhere
     public string nextSceneName;
     public int cutsceneIndex = 0;
 
+    // NOTE - Missing access specifier
     void Awake()
     {
         cutsceneIndex = 0;
@@ -35,6 +41,8 @@ public class TimelineManager : Singleton<TimelineManager>
 
         switch (cutsceneName)
         {
+            // NOTE - Consider using SetActive(cutsceneName = "..") so you won't
+            // have one long switch
             case "PostIntro":
                 skipButton.gameObject.SetActive(false);
                 topPanel.SetActive(false);
@@ -55,10 +63,14 @@ public class TimelineManager : Singleton<TimelineManager>
                 break;
         }
 
+        // NOTE - Why not just cache this component?
         gameObject.GetComponent<SubtitleManager>().ResetText();
 
+        // NOTE - This SetBGMSourcesVol should be an internal start coroutine
+        // call in AudioManager
         AudioManager.Instance.StartCoroutine(AudioManager.Instance.SetBGMSourcesVol(0.2f));
 
+        // NOTE - Use a foreach loop
         for (int i = 0; i < timelines.Count; i++)
         {
             if (timelines[i].name == (cutsceneName + "Cutscene"))
@@ -73,6 +85,7 @@ public class TimelineManager : Singleton<TimelineManager>
         {
             TrackAsset targetTrack = FindTrackByName(timelines[cutsceneIndex], "CameraAnim");
             
+            // NOTE - CameraHolder should be an observer to TimelineManager
             director.SetGenericBinding(targetTrack, GameObject.FindWithTag("CameraHolder").GetComponent<Animator>());
         }
         else if (cutsceneName == "Lose")
@@ -92,6 +105,9 @@ public class TimelineManager : Singleton<TimelineManager>
         {
             if (cutsceneName == "Lose")
             {
+                // NOTE - In my opinion, TradeButton should be subscribing to an
+                // event from timeline manager instead of TimelineManager
+                // straight up telling it
                 StartCoroutine(GameObject.FindGameObjectWithTag("TradeButton").GetComponent<Generator3D>().ClearMap(false));
             }
 
@@ -103,6 +119,7 @@ public class TimelineManager : Singleton<TimelineManager>
             yield return null;
         }
 
+        // NOTE - Remove space
         yield return new WaitForSeconds (0.25f);
 
         subtitlePanel.SetActive(false);
@@ -122,6 +139,7 @@ public class TimelineManager : Singleton<TimelineManager>
 
         if (currCutsceneName == "Lose")
         {
+            // NOTE - Look note above
             StartCoroutine(GameObject.FindGameObjectWithTag("TradeButton").GetComponent<Generator3D>().ClearMap(false));
         }
 
@@ -133,9 +151,11 @@ public class TimelineManager : Singleton<TimelineManager>
     private TrackAsset FindTrackByName(TimelineAsset asset, string trackName)
     {
         IEnumerable<TrackAsset> outputTracks = asset.GetOutputTracks();
+        // NOTE - Use track is AnimationTrack
         return outputTracks.FirstOrDefault(track => track.name == trackName && track.GetType() == typeof(AnimationTrack));
     }
 
+    // NOTE - Missing access specifier
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Backslash))

@@ -1,3 +1,4 @@
+// NOTE - Remove superfluous usings
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
@@ -10,15 +11,19 @@ using UnityEngine.SceneManagement;
 public class MenuTransitionManager : MonoBehaviour
 {
     [SerializeField] private List<GameObject> virtualCameras;
+    // NOTE - Consider not shortening current 
     [SerializeField] private CinemachineVirtualCamera currCamera;
     [SerializeField] private CinemachineBrain mainCamBrain;
     [SerializeField] private CinemachineVirtualCamera loginCamera;
     [SerializeField] private CinemachineVirtualCamera menuCamera;
     [SerializeField] private CinemachineVirtualCamera loadSceneCamera;
+
+    // NOTE - Consider using a dictionary
     [SerializeField] private GameObject loginPanel, menuPanel, settingsPanel, creditsPanel;
     [SerializeField] private GameObject loginTarget, menuTarget, settingsTarget, creditsTarget;
     [SerializeField] private Material loginMat, menuMat, settingsMat, creditsMat;
 
+    // NOTE - Missing access specifier
     void Awake()
     {
         TimelineManager.Instance.cutsceneIndex = 0;
@@ -56,6 +61,7 @@ public class MenuTransitionManager : MonoBehaviour
 
     public void UpdateCamera(CinemachineVirtualCamera target)
     {
+        // NOTE - Consider using a dictionary for this entire switch case
         switch (currCamera.name)
         {
             case "StartCamera":
@@ -82,6 +88,7 @@ public class MenuTransitionManager : MonoBehaviour
         currCamera.gameObject.SetActive(true);
         currCamera.Priority++;
 
+        // NOTE - Consider using a dictionary for this entire switch case
         switch (target.name)
         {
             case "StartCamera":
@@ -150,6 +157,9 @@ public class MenuTransitionManager : MonoBehaviour
     {
         float dissolveValue = mat.GetFloat("_DissolveValue");
 
+        // NOTE - Look in AudioManager, consider having a bool function instead
+        // of making two while loops to make it only one, and use a ternary 
+        // operator instead for the Time.deltaTime :)
         if (show)
         {
             AudioManager.Instance.PlaySFX("SFXHologramOpen");
@@ -187,6 +197,7 @@ public class MenuTransitionManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
 
+        // NOTE - Remove unused code
         // currCamera.Priority--;
         // currCamera.gameObject.SetActive(false);
         // currCamera = loadSceneCamera;
